@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIGBASKET</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+     <link href="index.css" rel="stylesheet"/>
+     <script src="index.js"></script>
+     <script src="./data/dynamic.js"></script>
+     <link rel="icon" href="logo1.jpg"/>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+     <style>
+       body
+       {
+         background-color:white;
+         color:black;
+       }
+         .mydark
+         {
+          background-color:black;
+         color:white;
+         }
+     </style>
+
+     <script>
+      function changeMode()
+      {
+        let mybody=document.body;
+        mybody.classList.toggle("mydark");
+      }
+     </script>
+
+</head>
+<body>
+  <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top " id="navbar">
+  <div class="container-fluid">
+    <a class="navbar-brand logo" href="#"><img src="logo1.jpg">BIGBASKET</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto  ">
+        <li class="nav-item">
+          <a class="nav-link " href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#product">Products</a>
+        </li>
+        
+        <li class="nav-item color-black">
+          <a class="nav-link " href="#contact">Contacts</a>
+        </li>
+        </ul>
+        <form class="d-flex ">
+          <input type="text"  class="form-control me-auto">
+          <button type="submit" class="btn btn-secondary "> Search</button>
+      </form>
+        <button class="btn p-2 my-lg-0 my-2"><a href="signup.html" target="_blank">SignUp</a></button>
+    <button class="btn p-2 my-lg-0 my-2"><a href="login.html"target="_blank">LogIn</a></button>
+    </div>
+    
+  </div>
+</div>
+</div>   
+</nav>
+
+<div class=" container bg-light clearfix">
+
+ <div class=" dropdown btn-group align-baseline" >
+<select id="category">
+    <button class="border border-success btn btn-light float-start  dropdown-toggle" >
+      <option> <i class="bi bi-search-heart"></i>  -SEARCH BY CATEGORY-</option>
+    </button> 
+    </select>
+    </div>
+  
+
+<button class="border border-success btn btn-light float-end bi bi-basket-fill"> My Basket</button>
+<button class="border border-success btn btn-light float-end bi bi-telephone-forward-fill"> 1860 123 1000</button>
+  <select id="location">
+<button class="border border-success btn btn-light bi bi-geo-alt dropdown-toggle" >  
+  <option>SELECT YOUR CITY </option>
+
+  </button>
+</select>
+
+
+
+<!--<div class="dropdown-menu">
+  <form class="px-4 py-3">
+    <div class="mb-3">
+      <label for="exampleDropdownFormEmail1" class="form-label">Select your city to start shopping</label>
+      <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="">
+    </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Enter your area/apartment/ pin code">
+    </div>
+    
+    <button type="submit" class="btn btn-success">Continue</button>
+  </form>
+  </div>-->
+  
+  <button class=" border border-success btn btn-light float-end bi bi-tags-fill">  Offers</button>
+  <button class="border border-success btn btn-light float-end bi bi-house-heart"> BB Speciality</button>
+  <button onclick="changeMode()" class="mode border border-success" >Change Mode</button>
+
+</div>
+<br/>
+
+
+<!--home-->
+<div class="img-container-fluid position-relative">
+<!--coupon-->
+  <div id="coupon" style="visibility:visible;">
+    <button onClick="closeCoupon()">&times; </button>
+    <img src="images/coupon.jpg">
+  </div>
+  <script>
+    window.onload=loadCoupon();
+  </script>
+  <!--dynamic -->
+  <script>
+    window.onload=getCategory();
+    
+    window.onload=getLocation();       
+  </script>
+  <!--Geo Location-->
+  <div id="geo" style="visibility:visible;">
+    <p id="out"></p>
+    <p id="weatherOut"></p>
+  </div>
+  <script>
+    window.onload= geolocation();
+      let x=document.getElementById('out');
+      let y=document.getElementById('weatherOut');
+      function geolocation()
+      {
+        if(navigator.geolocation)
+        {
+          navigator.geolocation.getCurrentPosition(showPosition)
+        }
+        else
+        {
+          x.innerText="Geo Not Supported"
+        }
+        }
+        function showPosition(data)
+        {
+          console.log(data)
+          let latitude = data.coords.latitude;
+          let longitude = data.coords.longitude;
+          const url = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${latitude}&lon=${longitude}&mode=json&units=metric&cnt=5&appid=fbf712a5a83d7305c3cda4ca8fe7ef29`
+          //api calling
+          fetch(url,{method:'GET'})
+          //return promise
+          .then((res) => res.json())
+          // resolve promise
+          .then((data) => {
+                    console.log(data)
+                    let cityName = data.city.name
+                    let temp = data.list[0].temp.day
+                    y.innerText = `Your City is ${cityName} and temp is ${temp} °C`
+                })
+                
+          x.innerText=`Latitude is ${latitude} and Longitude is ${longitude}`;
+
+        }
+  </script>
+  
+
+  <div id="carouselExampleIndicators" class="carousel slide " data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6" aria-label="Slide 7"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="7" aria-label="Slide 0"></button>
+    </div>
+     
+    <div class="container-fluid col-lg-2 col-md-2 col-sm-2 col-xs-2 w-100 col-12">
+    <div class="carousel-inner img-fluid justify-content col-lg-6 col-md-6 col-12">
+
+      
+        <div class="carousel-item active">
+          <img src="meeat.jpg" class="d-block w-100" alt="...">
+        </div>
+
+      <div class="carousel-item w-100 col-lg-6 col-md-6 col-12">
+            <img src="mang.jpg" class="d-block " alt="...">
+          </div>
+        
+
+      <div class="carousel-item col-lg-6 col-md-6 col-12 ">
+        
+            <img src="milkk.jpg" class="d-block " alt="...">
+          </div>
+  
+          <div class="carousel-item col-lg-6 col-md-6 col-12 ">
+            <img src="fresho.jpg" class="d-block " alt="...">
+          </div>
+        
+
+      <div class="carousel-item background-size:cover col-lg-6 col-md-6 col-12">
+        
+            <img src="snacks.jpg" class="d-block " alt="...">
+          </div>
+
+          <div class="carousel-item col-lg-6 col-md-6 col-12">
+            <img src="juice.jpg" class="d-block " alt="...">
+          </div>
+
+          <div class="carousel-item col-lg-6 col-md-6 col-12">
+            <img src="images/kitchen.jpg" class="d-block " alt="...">
+          </div>
+        
+          <div class="carousel-item col-lg-6 col-md-6 col-12">
+            <img src="skin.jpg" class="d-block " alt="...">
+          </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+  
+
+
+<section id="product">
+  <div class="'container m-5">
+    <h1 class="text-center my-5">My smart basket</h1>
+    <h3 class="text-center my-5">Fruits and Vegetables</h3>
+    <div class="row">
+      <div class="col-lg-2 col-md-6 mb-2">
+        <div class="card ">
+            <img src="fresh vege.jpg" class="card-img-top" alt="...">
+            <div class="card-body text-center ">
+              <h5 class="card-title"><a href="fruits&vegetables.html">Fresh Vegetables</a></h5>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 mb-2">
+            <div class="card">
+                <img src="freshfruits.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title"><a href="freshfruits.html">Fresh Fruits</a></h5>
+                
+                </div>
+              </div>
+              </div>
+
+              <div class="col-lg-2 col-md-6 mb-2">
+                <div class="card">
+                    <img src="cuts.jpg" class="card-img-top" alt="...">
+                    <div class="card-body text-center">
+                      <h5 class="card-title"><a href="cutsandsprouts.html">Cuts and Sprouts</a></h5>
+                  </div>
+                  </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-6 mb-2">
+                    <div class="card">
+                        <img src="exotic.jpg" class="card-img-top" alt="...">
+                        <div class="card-body text-center">
+                          <h5 class="card-title"><a href="exoticfruits&veggies.html">Exotic Fruits & Veggies</a></h5>
+                      
+                        </div>
+                      </div>
+                      </div>
+
+                      <div class="col-lg-2 col-md-6 mb-2">
+                        <div class="card">
+                            <img src="pooja.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                              <h5 class="card-title"><a href="poojaflowers.html">Pooja Flowers</a></h5>
+                      
+                            </div>
+                          </div>
+                          </div>
+
+                          <div class="col-lg-2 col-md-6 mb-2">
+                            <div class="card">
+                                <img src="herbs1.jpg" class="card-img-top" alt="...">
+                                <div class="card-body text-center">
+                                  <h5 class="card-title"><a href="herbs&seasoning.html">Herbs & Seasonings</a></h5>
+                      
+                                </div>
+                              </div>
+                              </div>
+</div>
+                           
+                              
+                              <h3 class="text-center my-5">Your Daily Staples</h3>
+    <div class="row">
+      <div class="col-lg-2 col-md-6 mb-2">
+        <div class="card ">
+            <img src="oil.jpg" class="card-img-top" alt="...">
+            <div class="card-body text-center ">
+              <h5 class="card-title"><a href="blendedcookingoils.html">Blended Cooking Oils</a></h5>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 mb-2">
+            <div class="card">
+                <img src="ricebranoils.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title"><a href="ricebranoils.html">Rice Bran Oils</a></h5>
+                
+                </div>
+              </div>
+              </div>
+
+              <div class="col-lg-2 col-md-6 mb-2">
+                <div class="card">
+                    <img src="cooking paste.jpg" class="card-img-top" alt="...">
+                    <div class="card-body text-center">
+                      <h5 class="card-title"><a href="cookingpaste.html">Cooking Paste</a></h5>
+                  </div>
+                  </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-6 mb-2">
+                    <div class="card">
+                        <img src="herbs and seasoning.jpg" class="card-img-top" alt="...">
+                        <div class="card-body text-center">
+                          <h5 class="card-title"><a href="herbs&seasoningpowders.html">Herbs & Seasoning Powders</a></h5>
+                      
+                        </div>
+                      </div>
+                      </div>
+
+                      <div class="col-lg-2 col-md-6 mb-2">
+                        <div class="card">
+                            <img src="powder spices.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                              <h5 class="card-title"><a href="powderspices.html">Powder Spices</a></h5>
+                      
+                            </div>
+                          </div>
+                          </div>
+
+                          <div class="col-lg-2 col-md-6 mb-2">
+                            <div class="card">
+                                <img src="blended masala.jpg" class="card-img-top" alt="...">
+                                <div class="card-body text-center">
+                                  <h5 class="card-title"><a href="blendedmasala.html">Blended Masala</a></h5>
+                      
+                                </div>
+                              </div>
+                              </div>
+                              </div>
+
+
+                 <h3 class="text-center my-5">Beverages</h3>
+                <div class="row">
+               <div class="col-lg-2 col-md-6 mb-2">
+                <div class="card b ">
+            <img src="soft drinks.jpg" class="card-img-top" alt="...">
+            <div class="card-body text-center ">
+              <h5 class="card-title"><a href="softdrinks.html">Soft Drinks</a></h5>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 mb-2">
+            <div class="card b">
+                <img src="coconut water.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title"><a href="coconutwater.html">Coconut Water</a></h5>
+                
+                </div>
+              </div>
+              </div>
+
+              <div class="col-lg-2 col-md-6 mb-2">
+                <div class="card b">
+                    <img src="energy drinks.jpg" class="card-img-top" alt="...">
+                    <div class="card-body text-center">
+                      <h5 class="card-title"><a href="energydrinks.html">Energy Drinks</a></h5>
+                  </div>
+                  </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-6 mb-2">
+                    <div class="card b">
+                        <img src="syrups.jpg" class="card-img-top" alt="...">
+                        <div class="card-body text-center">
+                          <h5 class="card-title"><a href="syrups&concentrates.html">Syrups & Concentrates</a></h5>
+                      
+                        </div>
+                      </div>
+                      </div>
+
+                      <div class="col-lg-2 col-md-6 mb-2">
+                        <div class="card b">
+                            <img src="juices.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                              <h5 class="card-title"><a href="juices.html">Juices</a></h5>
+                      
+                            </div>
+                          </div>
+                          </div>
+                        
+                          
+</div>
+
+
+                              <h3 class="text-center my-5">Snacks Store</h3>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-12">
+        <div class="card s">
+            <img src="namkeens.jpg" class="card-img-top" alt="...">
+            <div class="card-body text-center ">
+              <h5 class="card-title"><a href="namkeens.html">Namkeens, Chips & Nachos</a></h5>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-lg-3 col-md-3 col-12">
+            <div class="card s">
+                <img src="frozen snacks.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title"><a href="frozensnacks.html">Frozen Snacks</a></h5>
+                
+                </div>
+              </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="card s">
+                    <img src="soups.jpg" class="card-img-top" alt="...">
+                    <div class="card-body text-center">
+                      <h5 class="card-title"><a href="soups.html">Soups, Noodles & Pasta</a></h5>
+                  </div>
+                  </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-12">
+                    <div class="card s">
+                        <img src="biscuits.jpg" class="card-img-top" alt="...">
+                        <div class="card-body text-center">
+                          <h5 class="card-title"><a href="biscuits.html">Biscuits & Cookies</a></h5>
+                      
+                        </div>
+                      </div>
+                      </div>
+
+                      
+
+</div>
+
+                              <h3 class="text-center my-5">Cleaning & Household</h3>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-12">
+        <div class="card c ">
+            <img src="clean.jpg" class="card-img-top" alt="...">
+            <div class="card-body text-center ">
+              <h5 class="card-title"><a href="cleaners.html">Cleaners & Disinfectants</a></h5>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-lg-3 col-md-3 col-12">
+            <div class="card c">
+                <img src="fabric.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title"><a href="detergents.html">Detergents & Fabric Care</a></h5>
+                
+                </div>
+              </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="card c">
+                    <img src="scrubs.jpg" class="card-img-top" alt="...">
+                    <div class="card-body text-center">
+                      <h5 class="card-title"><a href="kitchenwipes.html">Kitchen Wipes & Utensil Scrubs</a></h5>
+                  </div>
+                  </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-12">
+                    <div class="card c">
+                        <img src="freshener.jpg" class="card-img-top" alt="...">
+                        <div class="card-body text-center">
+                          <h5 class="card-title"><a href="fresheners.html">Fresheners & Repellants</a></h5>
+                      
+                        </div>
+                      </div>
+                      </div>
+                      </div>
+
+
+                      <h3 class="text-center my-5">Beauty & Hygiene</h3>
+    <div class="row">
+      <div class="col-lg-2 col-md-6 mb-2">
+        <div class="card beauty ">
+            <img src="lips.jpg" class="card-img-top" alt="...">
+            <div class="card-body text-center ">
+              <h5 class="card-title"><a href="lips.html">Lips</a></h5>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 mb-2">
+            <div class="card beauty">
+                <img src="deos.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title"><a href="deos.html">Deos</a></h5>
+                
+                </div>
+              </div>
+              </div>
+
+              <div class="col-lg-2 col-md-6 mb-2">
+                <div class="card beauty">
+                    <img src="serum.jpg" class="card-img-top" alt="...">
+                    <div class="card-body text-center">
+                      <h5 class="card-title"><a href="serums.html">Serums & Moisturisers</a></h5>
+                  </div>
+                  </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-6 mb-2">
+                    <div class="card beauty">
+                        <img src="cream.jpg" class="card-img-top" alt="...">
+                        <div class="card-body text-center">
+                          <h5 class="card-title"><a href="bb.html">BB, CC Creams</a></h5>
+                      
+                        </div>
+                      </div>
+                      </div>
+
+                      <div class="col-lg-2 col-md-6 mb-2">
+                        <div class="card beauty">
+                            <img src="eye.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                              <h5 class="card-title"><a href="eyemakeup.html">Eye Makeup</a></h5>
+                          
+                            </div>
+                          </div>
+                          </div>
+    
+</div>
+
+
+<h3 class="text-center my-5">Home and Kitchen</h3>
+    <div class="row">
+      <div class="col-lg-2 col-md-6 mb-2">
+        <div class="card ">
+            <img src="under150.jpg" class="card-img-top" alt="...">
+            <div class="card-body text-center ">
+              <h5 class="card-title"><a href="under.html" >Under Rs.150</a></h5>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 mb-2">
+            <div class="card">
+                <img src="under.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title"><a href="below.html">Rs.150-Rs.300</a></h5>
+                
+                </div>
+              </div>
+              </div>
+
+              <div class="col-lg-2 col-md-6 mb-2">
+                <div class="card">
+                    <img src="notes.jpg" class="card-img-top" alt="...">
+                    <div class="card-body text-center">
+                      <h5 class="card-title"><a href="notebooks.html">Notebooks, Files & Folders</a></h5>
+                  </div>
+                  </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-6 mb-2">
+                    <div class="card">
+                        <img src="mugs.jpg" class="card-img-top" alt="...">
+                        <div class="card-body text-center">
+                          <h5 class="card-title"><a href="buckets.html">Buckets & Mugs</a></h5>
+                      
+                        </div>
+                      </div>
+                      </div>
+
+                      <div class="col-lg-2 col-md-6 mb-2">
+                        <div class="card">
+                            <img src="tawa.jpg" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                              <h5 class="card-title"><a href="tawa.html">Tawa, Kadai & Pans</a></h5>
+                      
+                            </div>
+                          </div>
+                          </div>
+
+                          <div class="col-lg-2 col-md-6 mb-2">
+                            <div class="card">
+                                <img src="cups.jpg" class="card-img-top" alt="...">
+                                <div class="card-body text-center">
+                                  <h5 class="card-title"><a href="cups.html">Cups, Mugs & Tumblers</a></h5>
+                      
+                                </div>
+                              </div>
+                              </div>
+                              </div>
+
+                      
+          </div>
+        </div>
+      </div>
+    </div>
+      
+  </section>
+
+
+
+  <div id="carouselExampleIndicators" class="carousel slide " data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 0"></button>
+      
+    </div>
+
+    <div class="container border-2px solid gray carousel-inner justify-content col-lg-6 col-md-6 col-12">
+        <div class="carousel-item active">
+          <img src="images/new1.jpg" class="d-block w-100" alt="...">
+        </div>
+
+      <div class="carousel-item w-100 col-lg-6 col-md-6 col-12">
+            <img src="images/new2.jpg" class="d-block " alt="...">
+          </div>
+        
+
+      <div class="carousel-item col-lg-6 col-md-6 col-12 ">
+        
+            <img src="images/new3.jpg" class="d-block " alt="...">
+          </div>
+  
+          <div class="carousel-item col-lg-6 col-md-6 col-12 ">
+            <img src="images/new4.jpg" class="d-block " alt="...">
+          </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  
+
+
+
+  <!--Bank offers-->
+  <section id="product">
+    <div class="'container m-5">
+  <h3 class="text-center my-5">Bank Offers</h3>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-12">
+        <div class="card bank ">
+            <img src="bank1.jpg" class="card-img-top" alt="...">
+            <div class="card-body text-center ">
+              <h5 class="card-title"><a href="fruits&vegetables.html"></a></h5>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-lg-3 col-md-3 col-12">
+            <div class="card bank ">
+                <img src="bank2.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title"><a href="#"></a></h5>
+                
+                </div>
+              </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-12">
+                <div class="card bank ">
+                    <img src="bank3.jpg" class="card-img-top" alt="...">
+                    <div class="card-body text-center">
+                      <h5 class="card-title"><a href="#"></a></h5>
+                  </div>
+                  </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-12">
+                    <div class="card bank">
+                        <img src="bank4.jpg" class="card-img-top" alt="...">
+                        <div class="card-body text-center">
+                          <h5 class="card-title"><a href="#"></a></h5>
+                      
+                        </div>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+                      </section>
+
+
+<!--contact section-->   
+<section id="contact">
+  <div class="container box">
+      <div class="row">
+          <div class="col-lg-6 mb-4 h-100">
+              <img src="logo1.jpg" class="img-fluid img">
+          </div>
+          <div class="col-lg-6 mb-4 h-100">
+             <h4>CONTACT US</h4>
+             <form>
+                 <input type="text" class="form-control" placeholder=" Enter your name">
+                 <input type="Email" class="form-control" placeholder=" Enter your mail id">
+                 <textarea class="form-control" placeholder="Enter your message"></textarea> 
+                 <button class="btn btn-primary"> Send Message</button>    
+             </form>
+
+         </div>
+
+      </div>
+  </div>
+</section>   
+<hr/>
+<!--footer section-->
+
+<footer class="container-fluid"> copyrights@bigbasket.com </footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>

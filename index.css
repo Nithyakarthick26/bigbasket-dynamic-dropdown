@@ -1,0 +1,287 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*
+{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+#navbar
+{
+    position:sticky;
+    top:0;
+    left:0;
+    z-index:100;
+    /*padding:.5rem .5rem;*/
+    box-shadow:5px 5px 20px rgba(0,0,0,.5);
+    background-color: black;
+}
+
+.navbar .navbar-brand
+{
+    font-size:25px;
+    font-weight:800;
+    color:greenyellow !important;
+}
+.navbar .logo
+{  
+    height:40px !important;
+    width:38px;
+    margin-top:-9px;
+    margin-left:2px
+}
+
+.logo>img{
+    height:40px !important;
+    width:100%
+}
+#navbarSupportedContent a
+{
+    color:white;
+    border-bottom:2px solid transparent;
+}
+
+#navbarSupportedContent a:hover
+{
+    border-bottom: 2px solid greenyellow;
+
+}
+#navbarSupportedContent button{
+    background:greenyellow;
+    width:5rem;
+    margin-left:4px;
+    border-radius: 15px;
+}
+.navbar .d-flex{
+    width:35% !important;
+    height:40px !important;
+    color:black !important;
+    margin-right:30px;
+}
+
+#coupon
+{
+    height:230px;
+    width:300px;
+    margin-top:2%;
+    margin-left:30%;
+    z-index:100;
+    visibility:hidden;
+    position:absolute;
+    justify-content: center;
+    align-items:center;
+    background-position:center;
+    border:2px solid black
+}
+#coupon>img
+{
+    height:225px;
+    width:100%;
+}
+#coupon >button
+{
+    position:absolute;
+    z-index:100;
+    margin-left:90%;
+    font-size:20px;
+    width:30px;
+    height:30px
+}
+
+.mode
+{
+    background-color:greenyellow;
+}
+.d-flex
+{
+    height:450px !important;
+    width:100% !important;
+}
+.carousel-inner
+{
+    height:450px !important;
+    width:100% !important;
+    background-size:cover;
+    background-position:center;
+}  
+
+.d-block
+{
+    height:450px !important;
+    width:100% !important;
+    background-size:cover;
+    background-position:center;    
+}
+
+.carousel-item
+{
+    height:450px !important;
+    width:100% !important;
+    background-size:cover;
+    background-position:center;
+}
+.d-flex
+{
+    height:450px !important;
+    width:100% !important;   
+}
+
+.rounded
+{
+    height:250px !important;
+    width:350px !important;
+    border-radius: 25px;
+}
+
+#product
+{ 
+    margin-top:-10px
+}
+
+#product h1
+{
+    font: size 50px;
+    letter-spacing:2px;
+    font-weight: 700px;   
+}
+#product img
+{
+    width:200px;
+    height:250px
+}
+.card
+{
+    width:200px;
+    height:250px;
+    background:#e5e5e5;
+    border:none !important;
+    box-shadow:15px 20px 20px rgba(0,0,0,.3),
+                inset 4px 4px 10px white;
+    border-radius:20px;
+    overflow:hidden;
+    justify-content: center;
+    align-items:center;
+    margin:1px 5px;
+    transition:.2s
+}
+
+.card:hover{
+    box-shadow:inset 5px 5px 10px rgba(0,0,0,.5),
+         inset -4px -4px 10px white;
+     transition: .2s;
+     transform:scale(1.1)
+}
+.b
+{
+    width:200px;
+    height:200px;
+    background:#e5e5e5;
+    border:none !important;
+    box-shadow:15px 20px 20px rgba(0,0,0,.3),
+                inset 4px 4px 10px white;
+    border-radius:20px;
+    overflow:hidden;
+    justify-content: center;
+    align-items:center;
+    margin:1px 100px;
+    transition:.2s
+}
+.s
+{
+    width:290px;
+    height:180px;
+    background:#e5e5e5;
+    border:none !important;
+    box-shadow:15px 20px 20px rgba(0,0,0,.3),
+                inset 4px 4px 10px white;
+    border-radius:20px;
+    overflow:hidden;
+    justify-content: center;
+    align-items:center;
+    margin:1px 20px;
+    transition:.2s
+}
+.c{
+    width:290px;
+    height:200px;
+    background:#e5e5e5;
+    border:none !important;
+    box-shadow:15px 20px 20px rgba(0,0,0,.3),
+                inset 4px 4px 10px white;
+    border-radius:20px;
+    overflow:hidden;
+    justify-content: center;
+    align-items:center;
+    margin:1px 20px;
+    transition:.2s
+}
+.bank
+{
+    width:240px;
+    height:180px;
+    background:#e5e5e5;
+    border:none !important;
+    box-shadow:15px 20px 20px rgba(0,0,0,.3),
+                inset 4px 4px 10px white;
+    border-radius:20px;
+    overflow:hidden;
+    justify-content: center;
+    align-items:center;
+    margin:15px 20px 80px ;
+    transition:.2s
+}
+.beauty
+{
+    width:200px;
+    height:200px;
+    background:#e5e5e5;
+    border:none !important;
+    box-shadow:15px 20px 20px rgba(0,0,0,.3),
+                inset 4px 4px 10px white;
+    border-radius:20px;
+    overflow:hidden;
+    justify-content: center;
+    align-items:center;
+    margin:-8px 100px;
+    transition:.2s
+}
+
+
+.img
+{
+    width:200px;
+    height:250px;
+    margin-right:10px
+}
+
+.box
+{
+    width:80% !important;
+    margin-top:25px;
+    height:540px !important
+
+}
+ #contact form{
+    display:flex;
+    flex-direction:column;
+    
+}
+#contact input{
+    margin:10px 0px;
+}
+#contact textarea{
+    margin:10px 0px
+}
+footer
+{
+    width:100%;
+    height:40px !important;
+    background:black;
+    margin-top:10px;
+    margin-bottom:10px;
+    text-align:center;
+    color:white
+}
+

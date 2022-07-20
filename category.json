@@ -1,0 +1,32 @@
+{
+  "category":[
+      {
+          "id":1,
+          "category":"Fruits and Vegetables"
+      },
+      {
+          "id":2,
+          "category":"Your Daily Staples"
+      },
+      {
+          "id":3,
+          "category":"Beverages"
+      },
+      {
+          "id":4,
+          "category":"Snacks Store"
+      },
+      {
+          "id":5,
+          "category":"Cleaning and Household"
+      },
+      {
+          "id":6,
+          "category":"Beauty and hygiene"
+      },
+      {
+          "id":7,
+          "category":"Home and Kitchen"
+      }
+  ]
+}

@@ -1,0 +1,38 @@
+
+     db.category.insert([
+        {
+            "id":1,
+            "category_id":1,
+            "state_id":1,
+            "category":"Fruits and Vegetables"
+        },
+        {
+            "id":2,
+            "state_id":3,
+            "category":"Your Daily Staples"
+        },
+        {
+            "id":3,
+            "state_id":4,
+            "category":"Beverages"
+        },
+        {
+            "id":4,
+            "state_id":1,
+            "category":"Snacks Store"
+        },
+        {
+            "id":5,
+            "state_id":2,
+            "category":"Cleaning and Household"
+        },
+        {
+            "id":6,
+            
+            "category":"Beauty and hygiene"
+        },
+        {
+            "id":7,
+            "category":"Home and Kitchen"
+        }
+    ])
